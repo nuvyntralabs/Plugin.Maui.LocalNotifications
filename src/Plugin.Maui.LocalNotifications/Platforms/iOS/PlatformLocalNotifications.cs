@@ -16,14 +16,14 @@ sealed class PlatformLocalNotifications : ILocalNotificationPlatform
             Title = request.Title,
             Body = request.Body
         };
-        UNNotificationTrigger trigger = request.Schedule.Kind switch
+        var delaySeconds = request.Schedule.Kind switch
         {
-            NotificationScheduleKind.At => UNTimeIntervalNotificationTrigger.CreateTrigger(
-                Math.Max(1, (request.Schedule.When ?? DateTimeOffset.Now.AddSeconds(1) - DateTimeOffset.Now).TotalSeconds), false),
-            NotificationScheduleKind.Interval => UNTimeIntervalNotificationTrigger.CreateTrigger(
-                Math.Max(60, request.Schedule.Interval?.TotalSeconds ?? 60), true),
-            _ => UNTimeIntervalNotificationTrigger.CreateTrigger(0.1, false)
+            NotificationScheduleKind.At => SecondsUntil(request.Schedule.When),
+            NotificationScheduleKind.Interval => Math.Max(60, request.Schedule.Interval?.TotalSeconds ?? 60),
+            _ => 0.1
         };
+        var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(
+            delaySeconds, request.Schedule.Kind == NotificationScheduleKind.Interval);
         var item = UNNotificationRequest.FromIdentifier(request.Id.ToString(), content, trigger);
         UNUserNotificationCenter.Current.AddNotificationRequest(item, null);
         return Task.CompletedTask;
@@ -34,6 +34,12 @@ sealed class PlatformLocalNotifications : ILocalNotificationPlatform
         UNUserNotificationCenter.Current.RemovePendingNotificationRequests([id.ToString()]);
         UNUserNotificationCenter.Current.RemoveDeliveredNotifications([id.ToString()]);
         return Task.CompletedTask;
+    }
+
+    static double SecondsUntil(DateTimeOffset? when)
+    {
+        var target = when ?? DateTimeOffset.Now.AddSeconds(1);
+        return Math.Max(1, (target - DateTimeOffset.Now).TotalSeconds);
     }
 }
 #endif
