@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- README lists Android and iOS host permissions.
+
 ## 1.0.0
 
 - Schedule / cancel local notifications and route taps

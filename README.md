@@ -53,9 +53,28 @@ Resolve `ILocalNotifications` from dependency injection, or use `LocalNotificati
 | **Pending / cancel** | `GetPendingAsync`, `CancelAllAsync` |
 | **Taps** | `NotificationTapped` + action ids |
 
+## Permissions
+
+### Android
+
+Add to `Platforms/Android/AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+```
+
+`POST_NOTIFICATIONS` is a runtime permission on Android 13+. `SCHEDULE_EXACT_ALARM` is required only when you set `Exact = true`.
+
+### iOS
+
+No `Info.plist` usage string. iOS still requires notification authorization (`UNUserNotificationCenter.RequestAuthorization`) before alerts appear. This plugin does not register APNs tokens.
+
 ## Platform notes
 
-**Android** — `POST_NOTIFICATIONS`, channels, AlarmManager. Default schedule is inexact (`SetAndAllowWhileIdle`). Set `Exact = true` for exact alarms (needs `SCHEDULE_EXACT_ALARM`).
+**Android** — channels + AlarmManager. Default schedule is inexact (`SetAndAllowWhileIdle`). Set `Exact = true` for exact alarms (needs `SCHEDULE_EXACT_ALARM`).
 
 **iOS** — `UNUserNotificationCenter`. Does not register APNs tokens.
 
@@ -81,7 +100,7 @@ dotnet build samples/Plugin.Maui.LocalNotifications.Sample/Plugin.Maui.LocalNoti
 dotnet pack src/Plugin.Maui.LocalNotifications/Plugin.Maui.LocalNotifications.csproj -c Release -o artifacts
 ```
 
-The `.nupkg` is written to `artifacts/Plugin.Maui.LocalNotifications.1.0.0.nupkg`. CI publishes to nuget.org and GitHub Packages.
+The `.nupkg` is written to `artifacts/Plugin.Maui.LocalNotifications.1.0.1.nupkg`. CI publishes to nuget.org and GitHub Packages.
 
 ## License
 
