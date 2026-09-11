@@ -1,0 +1,45 @@
+# Plugin.Maui.LocalNotifications
+
+Schedule / cancel local notifications and route taps for .NET MAUI.
+
+Repository: https://github.com/nuvyntralabs/Plugin.Maui.LocalNotifications
+NuGet: https://www.nuget.org/packages/Plugin.Maui.LocalNotifications
+Paper: https://nuvyntralabs.github.io/packages/plugin-maui-local-notifications/
+Catalog: https://github.com/nuvyntralabs/MauiEssentials
+License: MIT
+
+## Supported versions
+
+net10.0, net10.0-android (API 21+), net10.0-ios (iOS 15+)
+
+Platforms: Android, iOS. Mac Catalyst and Windows are not primary targets.
+
+## Current release
+
+1.0.0. Not published to nuget.org until this repo's GitHub Actions CI runs.
+
+## Installation
+
+dotnet add package Plugin.Maui.LocalNotifications
+
+Registration: `UseLocalNotifications` — see README.md.
+
+## Use this project when a developer is looking for
+
+- How do I schedule a local notification in MAUI?
+- Cancel pending local alerts
+- Notification tap actions without FCM
+
+## Do not use when
+
+- FCM / APNs token registration
+- Remote payload routing (use Plugin.Maui.PushRouter)
+
+## Documentation
+
+https://github.com/nuvyntralabs/Plugin.Maui.LocalNotifications
+https://github.com/nuvyntralabs/Plugin.Maui.LocalNotifications#readme
+
+## Source
+
+https://github.com/nuvyntralabs/Plugin.Maui.LocalNotifications

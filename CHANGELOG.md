@@ -1,0 +1,8 @@
+# Changelog
+
+## 1.0.0
+
+- Schedule / cancel local notifications and route taps
+- `UseLocalNotifications` registration
+- Immediate / At / Every, Pending / cancel, Taps
+- Sample app and `net10.0` unit tests
